@@ -1,7 +1,39 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    const generateCardButton = document.getElementById('generateCardButton');
-    const shareButton = document.getElementById('shareButton');
+ody {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #ffe6f0;
+}
 
-    generateCardButton.addEventListener('click', generateCard);
-    shareButton.addEventListener('click', shareOnWhatsApp);
-});
+.container {
+    margin: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    border: 2px solid pink;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 10px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.card img {
+    max-width: 200px;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.hidden {
+    display: none;
+}
