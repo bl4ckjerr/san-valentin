@@ -1,39 +1,42 @@
-ody {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #ffe6f0;
+function generateCard() {
+    const imageInput = document.getElementById("imageInput");
+    const messageInput = document.getElementById("messageInput").value;
+    const previewImage = document.getElementById("previewImage");
+    const previewMessage = document.getElementById("previewMessage");
+    const cardPreview = document.getElementById("cardPreview");
+
+    if (!imageInput.files[0]) {
+        alert("📸 ¡Sube una imagen primero!");
+        return;
+    }
+
+    // Mostrar la imagen subida
+    const file = imageInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        previewImage.src = e.target.result;
+        previewMessage.innerText = messageInput;
+        cardPreview.classList.remove("hidden"); // Mostrar la carta animada
+    };
+    reader.readAsDataURL(file);
 }
 
-.container {
-    margin: 20px;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+function shareOnWhatsApp() {
+    const message = document.getElementById("previewMessage").innerText;
+    const imageUrl = document.getElementById("previewImage").src;
+
+    // Crear el mensaje para WhatsApp
+    const whatsappMessage = `💖 ¡Feliz San Valentín! 💖\n${message}\nMira mi tarjeta: ${imageUrl}`;
+    const whatsappLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(whatsappMessage)}`;
+
+    window.open(whatsappLink, "_blank"); // Abrir en una nueva pestaña
 }
 
-.card {
-    border: 2px solid pink;
-    padding: 10px;
-    display: inline-block;
-    border-radius: 10px;
-    animation: fadeIn 1s ease-in-out;
-}
+document.addEventListener('DOMContentLoaded', (event) => {
+    const generateCardButton = document.getElementById('generateCardButton');
+    const shareButton = document.getElementById('shareButton');
 
-.card img {
-    max-width: 200px;
-    border-radius: 5px;
-}
-
-.hidden {
-    display: none;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-.hidden {
-    display: none;
-}
+    generateCardButton.addEventListener('click', generateCard);
+    shareButton.addEventListener('click', shareOnWhatsApp);
+});
