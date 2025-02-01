@@ -12,17 +12,21 @@
         <h1>💌 Crea tu Carta de San Valentín 💌</h1>
 
         <!-- Formulario para subir la imagen y escribir el mensaje -->
-        <input type="file" id="imageInput" accept="image/*">
-        <textarea id="messageInput" placeholder="Escribe un mensaje bonito..."></textarea>
-        <button onclick="generateCard()">💖 Crear Carta</button>
+        <label for="imageInput">Subir Imagen:</label>
+        <input type="file" id="imageInput" accept="image/*" aria-label="Subir Imagen">
+
+        <label for="messageInput">Mensaje:</label>
+        <textarea id="messageInput" placeholder="Escribe un mensaje bonito..." aria-label="Escribe un mensaje bonito"></textarea>
+
+        <button id="generateCardButton">💖 Crear Carta</button>
 
         <!-- Área donde se mostrará la animación -->
-        <div id="cardPreview" class="hidden">
+        <div id="cardPreview" class="hidden" aria-hidden="true">
             <div class="card">
                 <img id="previewImage" src="" alt="Tu Imagen">
                 <p id="previewMessage"></p>
             </div>
-            <button onclick="shareOnWhatsApp()">📲 Compartir por WhatsApp</button>
+            <button id="shareButton">📲 Compartir por WhatsApp</button>
         </div>
     </div>
 
