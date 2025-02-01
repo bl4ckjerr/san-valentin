@@ -1,0 +1,41 @@
+# backend/app.py
+
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
+import os
+from werkzeug.utils import secure_filename
+
+app = Flask(__name__)
+CORS(app)  # Permitir que el frontend haga peticiones al backend
+
+UPLOAD_FOLDER = "uploads"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+# Asegurar que la carpeta de uploads existe
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+@app.route("/upload", methods=["POST"])
+def upload_file():
+    if "file" not in request.files:
+        return jsonify({"error": "No se encontró el archivo"}), 400
+
+    file = request.files["file"]
+
+    if file.filename == "":
+        return jsonify({"error": "No se seleccionó archivo"}), 400
+
+    filename = secure_filename(file.filename)
+    file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+    file.save(file_path)
+
+    # Generar la URL para compartir
+    image_url = request.host_url + "uploads/" + filename
+    return jsonify({"image_url": image_url})
+
+@app.route("/uploads/<filename>")
+def uploaded_file(filename):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=5000)
